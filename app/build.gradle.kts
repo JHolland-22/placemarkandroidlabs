@@ -4,6 +4,10 @@ plugins {
 }
 
 android {
+
+    buildFeatures {
+        viewBinding = true
+    }
     namespace = "ie.setu.placemark"
     compileSdk = 36
 
