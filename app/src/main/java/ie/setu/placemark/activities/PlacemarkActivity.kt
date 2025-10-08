@@ -1,6 +1,6 @@
 package ie.setu.placemark.activities
 
-import MainApp
+import ie.setu.placemark.main.MainApp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
