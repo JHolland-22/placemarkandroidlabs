@@ -3,16 +3,15 @@ package ie.setu.placemark.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ie.setu.placemark.databinding.CardPlacemarkBinding
 import ie.setu.placemark.models.PlacemarkModel
+import ie.setu.placemark.databinding.CardPlacemarkBinding
 
-class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>) :
+class PlacemarkAdapter(private var placemarks: List<PlacemarkModel>) :
     RecyclerView.Adapter<PlacemarkAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardPlacemarkBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-
         return MainHolder(binding)
     }
 
