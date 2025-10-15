@@ -30,7 +30,7 @@ class PlacemarkActivity : AppCompatActivity() {
             placemark.title = binding.placemarkTitle.text.toString()
             placemark.description = binding.description.text.toString()
             if (placemark.title.isNotEmpty()) {
-                app.placemarks.add(placemark.copy())
+                app.placemarks.create(placemark.copy())
                 setResult(RESULT_OK)
                 finish()
             }
