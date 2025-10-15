@@ -2,7 +2,7 @@ package ie.setu.placemark.main
 
 import android.app.Application
 import ie.setu.placemark.models.PlacemarkMemStore
-// import ie.setu.placemark.models.PlacemarkModel
+import ie.setu.placemark.models.PlacemarkModel
 import timber.log.Timber
 import timber.log.Timber.i
 
