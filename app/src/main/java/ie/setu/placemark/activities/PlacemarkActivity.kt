@@ -1,27 +1,27 @@
 package ie.setu.placemark.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.setu.placemark.R
 import ie.setu.placemark.databinding.ActivityPlacemarkBinding
-import ie.setu.placemark.helpers.showImagePicker
 import ie.setu.placemark.main.MainApp
 import ie.setu.placemark.models.PlacemarkModel
-import timber.log.Timber
+import ie.setu.placemark.helpers.showImagePicker
 import timber.log.Timber.i
 
 class PlacemarkActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlacemarkBinding
-    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var placemark = PlacemarkModel()
     lateinit var app: MainApp
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +39,15 @@ class PlacemarkActivity : AppCompatActivity() {
 
         if (intent.hasExtra("placemark_edit")) {
             edit = true
+            // Requires API 33+
+            // placemark = intent.getParcelableExtra("placemark_edit",PlacemarkModel::class.java)!!
             placemark = intent.extras?.getParcelable("placemark_edit")!!
             binding.placemarkTitle.setText(placemark.title)
             binding.description.setText(placemark.description)
             binding.btnAdd.setText(R.string.save_placemark)
-            binding.chooseImage.setOnClickListener {
-                showImagePicker(imageIntentLauncher)
-            }
-
+            Picasso.get()
+                .load(placemark.image)
+                .into(binding.placemarkImage)
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -68,8 +69,10 @@ class PlacemarkActivity : AppCompatActivity() {
         }
 
         binding.chooseImage.setOnClickListener {
-            i("Select image")
+            showImagePicker(imageIntentLauncher)
         }
+
+        registerImagePickerCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -95,11 +98,13 @@ class PlacemarkActivity : AppCompatActivity() {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
                             placemark.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(placemark.image)
+                                .into(binding.placemarkImage)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
     }
-
 }
